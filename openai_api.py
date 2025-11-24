@@ -1,7 +1,8 @@
 from openai import OpenAI
 from joblib import Memory
-from pydantic import BaseModel
 from Config import MEMCACHE_PATH, DEFAULT_MODEL_NAME, OPENAI_API_KEY
+
+# Caching to avoid calling the API twice for the same prompt
 memory = Memory(MEMCACHE_PATH, verbose=0)
 
 @memory.cache
@@ -20,25 +21,6 @@ def batch_chat(n: int, user_prompt: str, system_prompt: str = None, message_hist
         n=n
     )
     return response
-
-@memory.cache
-def get_formatted_chat_response(response_format: BaseModel, user_prompt: str, system_prompt: str = None) -> BaseModel:
-    """
-    Example response_format:
-    class Recipe(BaseModel):
-        name: str
-        ingredients: list[str]
-    """
-    client = OpenAI(api_key=OPENAI_API_KEY)
-
-    response = client.responses.parse(
-        model=DEFAULT_MODEL_NAME,
-        input=format_messages(user_prompt, system_prompt) if system_prompt else format_messages(user_prompt),
-        text_format=response_format,
-    )
-    return response.output_parsed
-
-client = OpenAI(api_key=OPENAI_API_KEY)
     
 def format_messages(user_prompt: str, system_prompt: str = "You are a helpful assistant.") -> list[dict]:
     assert isinstance(user_prompt, str), "User prompt must be a string."
