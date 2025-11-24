@@ -1,7 +1,7 @@
-# Saying No
-Saying no is one of the hardest things, but focussing on what matters is very important.  
+# &#128683; Saying No &#128683;
+Saying no can be a hard thing, but focussing on what matters is very important.  
 
-I wrote this simple openai api wrapper to help me say no to distractions without much time and effort.  
+I wrote this simple openai api wrapper to help me say "no" to distractions without much time and effort.  
 Feel free to adapt this code as you like. 
 
 ## Installation
@@ -16,6 +16,8 @@ Feel free to adapt this code as you like.
    ```
    python say_no.py
    ```
+6. Bind this script to a keyboard shortcut for easy access
+
 
 It will take your current clipboard content as input and generate a polite but concise refusal message.
 You can adapt the system prompt in `system_prompt.txt` to better suit your needs.
